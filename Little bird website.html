@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Little Nest</title>
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+  <script>
+    function handleDonateClick() {
+      const amount = parseInt(document.getElementById("donation-amount").value, 10);
+      if (!amount || isNaN(amount)) {
+        alert("Please enter a valid amount.");
+        return;
+      }
+      const options = {
+        key: "rzp_test_YourKeyHere", // Replace with your Razorpay key
+        amount: amount * 100,
+        currency: "INR",
+        name: "Little Nest",
+        description: "Donation to support children",
+        image: "logo.png",
+        handler: function () {
+          alert("Thank you! Your donation was successful.");
+        },
+        prefill: {
+          name: "Donor",
+          email: "donor@example.com",
+          contact: "9999999999",
+        },
+        notes: {
+          address: "Little Nest - Orphanage Support",
+        },
+        theme: {
+          color: "#F97316",
+        },
+      };
+      const rzp = new Razorpay(options);
+      rzp.open();
+    }
+
+    function handleContactSubmit(e) {
+      e.preventDefault();
+      const name = document.getElementById("name").value;
+      alert(`Thank you, ${name}! We’ll get back to you soon.`);
+      document.getElementById("contact-form").reset();
+    }
+  </script>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+</head>
+<body class="bg-orange-50 text-gray-800 font-sans">
+
+  <!-- Header -->
+  <header class="bg-yellow-200 p-6 shadow-md flex items-center justify-center gap-4">
+    <img src="logo.png" alt="Little Nest Logo" class="w-16 h-16" />
+    <div class="text-center">
+      <h1 class="text-4xl font-bold text-orange-800">Little Nest</h1>
+      <p class="text-lg text-orange-700">Every Child Deserves a Nest</p>
+    </div>
+  </header>
+
+  <!-- Main -->
+  <main class="px-4 py-10 max-w-5xl mx-auto space-y-16">
+
+    <!-- About -->
+    <section>
+      <h2 class="text-3xl font-semibold mb-4">About Us</h2>
+      <p>
+        Little Nest is a safe, loving space for orphaned and abandoned children aged 0–6. We provide shelter, early education,
+        emotional care, and community support. Our goal is to nurture each child in a warm, caring environment where they can
+        thrive. We believe that every child deserves not just survival, but joy, learning, and a sense of belonging.
+      </p>
+      <p class="mt-4">
+        <strong>About the Founder:</strong> Little Nest was founded by Rajvardhan Bhatnagar, a Class 10 student at Teoler Unbounded,
+        driven by a strong sense of empathy and social responsibility. Rajvardhan envisioned a place where every child could feel safe,
+        valued, and loved.
+      </p>
+    </section>
+
+    <!-- Projects -->
+    <section>
+      <h2 class="text-3xl font-semibold mb-4">Our Projects</h2>
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="border rounded-lg p-4 bg-white shadow-sm">
+          <h3 class="text-xl font-bold">Project Sunrise</h3>
+          <p class="mt-2">
+            A nurturing early childhood shelter and learning center. Project Sunrise focuses on emotional, social, and intellectual growth
+            through guided play, health check-ups, and early literacy programs.
+          </p>
+        </div>
+        <div class="border rounded-lg p-4 bg-white shadow-sm">
+          <h3 class="text-xl font-bold">Sunrise Stationery Drive</h3>
+          <p class="mt-2">
+            We collect learning materials and books to provide children with basic tools of education. Donors can contribute new or gently used items
+            to be distributed at our shelters.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Upcoming Projects -->
+    <section>
+      <h2 class="text-3xl font-semibold mb-4">Upcoming Projects</h2>
+      <div class="space-y-6">
+        <div>
+          <h3 class="text-xl font-bold">Mobile Library Van</h3>
+          <p class="mt-2">
+            A traveling library to bring storybooks and learning kits to children in remote or underserved areas.
+          </p>
+        </div>
+        <div>
+          <h3 class="text-xl font-bold">Nest Wellness Camps</h3>
+          <p class="mt-2">
+            We’ll organize health checkups, hygiene awareness sessions, and nutritional support with volunteer doctors and wellness experts.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Get Involved -->
+    <section>
+      <h2 class="text-3xl font-semibold mb-4">Get Involved</h2>
+      <ul class="list-disc ml-6 space-y-2">
+        <li>Donate stationery, storybooks, or funds</li>
+        <li>Volunteer on-site or remotely</li>
+        <li>Sponsor meals, healthcare, or education</li>
+      </ul>
+
+      <div class="mt-6">
+        <label class="block mb-2 font-medium">Enter Donation Amount (INR)</label>
+        <input
+          type="number"
+          id="donation-amount"
+          class="border rounded p-2 w-40"
+          placeholder="500"
+          value="500"
+        />
+        <div class="mt-4">
+          <button onclick="handleDonateClick()" class="bg-orange-500 text-white px-4 py-2 rounded hover:bg-orange-600">
+            Donate Now
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section>
+      <h2 class="text-3xl font-semibold mb-4">Contact Us</h2>
+      <form id="contact-form" onsubmit="handleContactSubmit(event)" class="space-y-4 max-w-md">
+        <input
+          type="text"
+          required
+          id="name"
+          placeholder="Your Name"
+          class="border p-2 w-full rounded"
+        />
+        <textarea
+          required
+          placeholder="Your Message"
+          class="border p-2 w-full rounded"
+        ></textarea>
+        <button type="submit" class="bg-orange-500 text-white px-4 py-2 rounded hover:bg-orange-600">
+          Send Message
+        </button>
+      </form>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-yellow-100 py-8 text-center mt-12">
+    <div class="flex flex-col items-center gap-4">
+      <img src="logo.png" alt="Logo" class="w-12 h-12" />
+      <p class="text-orange-700">© 2025 Little Nest. All rights reserved.</p>
+      <div class="space-x-4">
+        <a href="#" class="text-orange-600 hover:underline">Privacy Policy</a>
+        <a href="#" class="text-orange-600 hover:underline">Terms of Use</a>
+        <a href="#" class="text-orange-600 hover:underline">Volunteer</a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
